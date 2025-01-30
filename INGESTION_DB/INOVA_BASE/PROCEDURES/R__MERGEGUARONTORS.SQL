@@ -92,7 +92,7 @@ BEGIN
 					  ,s.PATIENT_BALANCE as PatientBalance
 					  ,mEmploymentStatus.DestinationSk AS EmploymentStatusSK --MAP
 					  ,s.BIRTHDATE AS DateOfBirth
-					  ,-1 AS SexSK --MAP
+					  ,-2 AS SexSK --MAP
 					  --,mAccountType.DestinationSK as AccountTypeSK
 					  ,COALESCE(dat.AccountTypeSK,0) as AccountTypeSK
 					  ,4 as UserType --All guarantor accounts are guarantors in Epic, eCW only
