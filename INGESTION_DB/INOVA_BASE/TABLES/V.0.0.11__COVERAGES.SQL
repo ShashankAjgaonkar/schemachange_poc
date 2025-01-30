@@ -1,0 +1,1 @@
+create or replace stream PROD_INGESTION_DB.INOVA_STAGE.STREAM_COVERAGE on table COVERAGE;
