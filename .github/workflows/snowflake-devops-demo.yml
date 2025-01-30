@@ -13,7 +13,11 @@ on:
       - QA
 
     paths:
-      - './' # location
+      - '$GITHUB_WORKSPACE/**'
+      - 'AUDIT_DB/**'
+      - 'HARMONIZED_DB/**'
+      - 'INGESTION_DB/**'
+      - 'REPORTING_DB/**'
 
   workflow_dispatch:
 
@@ -58,7 +62,7 @@ jobs:
 
           echo "Step 2: Running schemachange"
 
-          schemachange -f ./ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
+          schemachange -f $GITHUB_WORKSPACE/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
 
       - name: Run schemachange = QA
 
@@ -78,7 +82,7 @@ jobs:
           echo "Step 1: Installing schemachange"
           pip install schemachange==3.7.0
       
-          schemachange -f ./ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_QA.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"QA"}'
+          schemachange -f $GITHUB_WORKSPACE/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_QA.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"QA"}'
 
 
       - name: Run schemachange PRD
@@ -106,5 +110,5 @@ jobs:
           
           echo "Step 2: Running schemachange"
 
-          schemachange -f ./ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_PROD.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"PROD"}'
+          schemachange -f $GITHUB_WORKSPACE/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_PROD.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"PROD"}'
 
