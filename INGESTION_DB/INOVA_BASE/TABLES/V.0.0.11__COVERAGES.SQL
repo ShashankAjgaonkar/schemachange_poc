@@ -1,1 +1,1 @@
-create or replace stream {{ environment }}_INGESTION_DB.INOVA_STAGE.STREAM_COVERAGE on table COVERAGE;
+create or replace stream {{ environment }}_INGESTION_DB.INOVA_BASE.STREAM_COVERAGE on table {{ environment }}_INGESTION_DB.INOVA_BASE.DIMAGE;
