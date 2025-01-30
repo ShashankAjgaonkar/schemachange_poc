@@ -1,4 +1,4 @@
-create or replace TABLE {{environment}}_INGESTION_DB.INOVA_BASE.DIMAGE (
+create or replace TABLE {{ env_var('environment') }}__INGESTION_DB.INOVA_BASE.DIMAGE (
 	AGESK NUMBER(38,0) NOT NULL,
 	AGERANGE VARCHAR(50),
 	BASECREATEDDATE TIMESTAMP_NTZ(9),

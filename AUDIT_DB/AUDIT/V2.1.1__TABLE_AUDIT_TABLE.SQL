@@ -1,4 +1,4 @@
-create or replace TABLE {{environment}}_AUDIT_DB.AUDIT.AUDIT_TABLE (
+create or replace TABLE {{ env_var('environment') }}_AUDIT_DB.AUDIT.AUDIT_TABLE (
 	LOG_TIMESTAMP TIMESTAMP_NTZ(9),
 	PARTNERSK NUMBER(38,0),
 	FLOW_TYPE VARCHAR(1),
