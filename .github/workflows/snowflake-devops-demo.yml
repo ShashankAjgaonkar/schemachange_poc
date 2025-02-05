@@ -18,6 +18,7 @@ on:
       - 'HARMONIZED_DB/**'
       - 'INGESTION_DB/**'
       - 'REPORTING_DB/**'
+      - 'SCHEMAS/**'
 
   workflow_dispatch:
 
