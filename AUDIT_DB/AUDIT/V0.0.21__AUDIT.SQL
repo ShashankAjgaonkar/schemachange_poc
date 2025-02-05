@@ -1,0 +1,1 @@
+CREATE SCHEMA {{ environment }}_AUDIT_DB.AUDIT
