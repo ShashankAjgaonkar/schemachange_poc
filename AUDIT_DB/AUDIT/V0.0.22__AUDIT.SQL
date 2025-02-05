@@ -1,1 +1,1 @@
-CREATE SCHEMA {{ environment }}_AUDIT_DB.AUDIT
+CREATE OR REPLACE SCHEMA {{ environment }}_AUDIT_DB.AUDIT
