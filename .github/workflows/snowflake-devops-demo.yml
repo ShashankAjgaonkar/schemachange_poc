@@ -62,14 +62,14 @@ jobs:
           pip install schemachange
           
           echo "adding password to file"
-          echo password = "\"${{secrets.SF_PASSWORD}}\"" >> .github/workflows/connections.toml
-          echo database = "\"${{secrets.SF_DATABASE_DEV}}\"" >> .github/workflows/connections.toml
-
+          echo "password = \"${{secrets.SF_PASSWORD}}\" " >> .github/workflows/connections.toml
+          echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
+          
           echo "changing user permission"
           chown $USER ".github/workflows/connections.toml"
           chmod 0600 ".github/workflows/connections.toml"
 
-
+          cat .github/workflows/connections.toml
           echo "Step 2: Running schemachange"
 
           schemachange -f $GITHUB_WORKSPACE/ --connections-file-path .github/workflows/connections.toml --connection-name myconnection -c $SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
