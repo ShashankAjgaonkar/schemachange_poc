@@ -62,7 +62,7 @@ jobs:
           pip install schemachange
           
           echo "adding password to file"
-          echo "password = \"${{secrets.SF_PASSWORD}}\" " >> .github/workflows/connections.toml
+          echo "\npassword = \"${{secrets.SF_PASSWORD}}\" " >> .github/workflows/connections.toml
           echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
           
           echo "changing user permission"
