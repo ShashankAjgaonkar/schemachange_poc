@@ -61,9 +61,11 @@ jobs:
           echo "Step 1: Installing schemachange"
           pip install schemachange
           
-          echo "password = \"${{secrets.SF_PASSWORD}}\" " >> .github/workflows/connections.toml
-          echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
+          echo "adding password to file"
+          echo password = "\"${{secrets.SF_PASSWORD}}\"" >> .github/workflows/connections.toml
+          echo database = "\"${{secrets.SF_DATABASE_DEV}}\"" >> .github/workflows/connections.toml
 
+          echo "changing user permission"
           chown $USER ".github/workflows/connections.toml"
           chmod 0600 ".github/workflows/connections.toml"
 
