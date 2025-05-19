@@ -70,7 +70,7 @@ jobs:
 
           echo "Step 2: Running schemachange"
 
-          schemachange -f sql-files --connections-file-path .github/workflows/connections.toml --connection-name myconnection -c$SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
+          schemachange -f $GITHUB_WORKSPACE/ --connections-file-path .github/workflows/connections.toml --connection-name myconnection -c $SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
 
       - name: Run schemachange PROD
 
