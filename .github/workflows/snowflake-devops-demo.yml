@@ -52,19 +52,30 @@ jobs:
           SF_ROLE: ${{ secrets.SF_ROLE_DEV }}
           SF_WAREHOUSE: ${{ secrets.SF_WAREHOUSE }}
           SF_DATABASE: ${{ secrets.SF_DATABASE_DEV }}
-          SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
+          SF_PRIVATE_KEY: ${{ secrets.SF_PRIVATE_KEY }}
           BRANCH_NAME_FOR_CONFIG: ${{ steps.extract_branch.outputs.branch }}
 
         run: |
           echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
           python --version
           echo "Step 1: Installing schemachange"
-          pip install schemachange==3.7.0
+          pip install schemachange
+          
+          echo "adding password to file"
+          echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
+          echo "role = \"${{secrets.SF_ROLE_DEV}}\" " >> .github/workflows/connections.toml
+          echo "warehouse = \"${{secrets.SF_WAREHOUSE}}\" " >> .github/workflows/connections.toml
+          echo "$SF_PRIVATE_KEY" | base64 -d > .github/workflows/private_key.p8
+          
+          echo "changing user permission"
+          chown $USER ".github/workflows/connections.toml"
+          chmod 0600 ".github/workflows/connections.toml"
+          chmod 0600 ".github/workflows/private_key.p8"
 
+          cat .github/workflows/connections.toml
           echo "Step 2: Running schemachange"
 
-          schemachange -f $GITHUB_WORKSPACE/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
-
+          schemachange -f $GITHUB_WORKSPACE/ --connections-file-path .github/workflows/connections.toml --connection-name myconnection -c $SF_DATABASE.SCHEMACHANGE_DEV.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"DEV"}'
 
       - name: Run schemachange PROD
 
@@ -77,6 +88,7 @@ jobs:
           SF_ROLE: ${{ secrets.SF_ROLE_PROD }}
           SF_WAREHOUSE: ${{ secrets.SF_WAREHOUSE }}
           SF_DATABASE: ${{ secrets.SF_DATABASE_PROD }}
+          SF_PRIVATE_KEY: ${{ secrets.SF_PRIVATE_KEY }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }} 
 
           BRANCH_NAME_FOR_CONFIG: ${{ steps.extract_branch.outputs.branch }}       
@@ -84,12 +96,21 @@ jobs:
         run: |
           echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
           python --version
-      
           echo "Step 1: Installing schemachange"
-
-          pip install schemachange==3.7.0
+          pip install schemachange
           
+          echo "adding password to file"
+          echo "database = \"${{secrets.SF_DATABASE_PROD}}\" " >> .github/workflows/connections.toml
+          echo "role = \"${{secrets.SF_ROLE_PROD}}\" " >> .github/workflows/connections.toml
+          echo "warehouse = \"${{secrets.SF_WAREHOUSE}}\" " >> .github/workflows/connections.toml
+          echo "$SF_PRIVATE_KEY" | base64 -d > .github/workflows/private_key.p8
+          
+          echo "changing user permission"
+          chown $USER ".github/workflows/connections.toml"
+          chmod 0600 ".github/workflows/connections.toml"
+          chmod 0600 ".github/workflows/private_key.p8"
+
+          cat .github/workflows/connections.toml
           echo "Step 2: Running schemachange"
 
-          schemachange -f $GITHUB_WORKSPACE/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE_PROD.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"PROD"}'
-
+          schemachange -f $GITHUB_WORKSPACE/ --connections-file-path .github/workflows/connections.toml --connection-name myconnection -c $SF_DATABASE.SCHEMACHANGE_PROD.CHANGE_HISTORY --create-change-history-table --vars '{"environment":"PROD"}'
