@@ -64,13 +64,13 @@ jobs:
           pip install schemachange
           
           echo "adding password to file"
-          echo "private_key = \"${{secrets.SF_PRIVATE_KEY}}\" " >> .github/workflows/connections.toml
           echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
-          echo "private_key_passphrase = \"${{secrets.SF_PRIVATE_KEY_PASSPHRASE}}\" " >> .github/workflows/connections.toml
+          echo "$SF_PRIVATE_KEY" | base64 -d > .github/workflows/private_key.p8
           
           echo "changing user permission"
           chown $USER ".github/workflows/connections.toml"
           chmod 0600 ".github/workflows/connections.toml"
+          chmod 0600 ".github/workflows/private_key.p8"
 
           cat .github/workflows/connections.toml
           echo "Step 2: Running schemachange"
