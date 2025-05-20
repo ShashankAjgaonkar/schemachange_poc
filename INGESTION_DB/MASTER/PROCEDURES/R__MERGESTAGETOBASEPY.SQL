@@ -50,7 +50,7 @@ def merge_into_final(session,source,df,primary_keys,file,partnersk=-1):
         ON {on_condition} AND target.snowflake_deleted_flag = ''0''
         WHEN MATCHED AND ({change_condition}) THEN
             UPDATE SET
-                target.snowflake_deleted_flag = ''1'',
+                target.snowflake_deleted_flag = ''0'',
                 target.snowflake_updated_at = ''{currenttime}'',
                 target.BASEUPDATEDDATE = ''{currenttime}''
         WHEN NOT MATCHED THEN
