@@ -1,4 +1,4 @@
 [myconnection]
 account = "EKJHKPW-IR25446"
-user = "snow"
+user = "CICD_USER"
 warehouse = "DEVELOPER_WH"
