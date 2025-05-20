@@ -2,4 +2,5 @@
 account = "EKJHKPW-IR25446"
 user = "CICD_USER"
 authenticator = "SNOWFLAKE_JWT"
+private_key_file = ".github/workflows/private_key.p8"
 warehouse = "DEVELOPER_WH"
