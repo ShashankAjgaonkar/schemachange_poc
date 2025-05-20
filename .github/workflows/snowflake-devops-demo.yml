@@ -53,6 +53,8 @@ jobs:
           SF_WAREHOUSE: ${{ secrets.SF_WAREHOUSE }}
           SF_DATABASE: ${{ secrets.SF_DATABASE_DEV }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
+          SF_PRIVATE_KEY: ${{ secrets.SF_PRIVATE_KEY }}
+          SF_PRIVATE_KEY_PASSPHRASE: ${{ secrets.SF_PRIVATE_KEY_PASSPHRASE }}
           BRANCH_NAME_FOR_CONFIG: ${{ steps.extract_branch.outputs.branch }}
 
         run: |
@@ -62,8 +64,9 @@ jobs:
           pip install schemachange
           
           echo "adding password to file"
-          echo "password = \"${{secrets.SF_PASSWORD}}\" " >> .github/workflows/connections.toml
+          echo "private_key = \"${{secrets.SF_PRIVATE_KEY}}\" " >> .github/workflows/connections.toml
           echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
+          echo "private_key_passphrase = \"${{secrets.SF_PRIVATE_KEY_PASSPHRASE}}\" " >> .github/workflows/connections.toml
           
           echo "changing user permission"
           chown $USER ".github/workflows/connections.toml"
