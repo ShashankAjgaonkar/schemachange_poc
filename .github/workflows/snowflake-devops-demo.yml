@@ -63,6 +63,8 @@ jobs:
           
           echo "adding password to file"
           echo "database = \"${{secrets.SF_DATABASE_DEV}}\" " >> .github/workflows/connections.toml
+          echo "role = \"${{secrets.SF_ROLE_DEV}}\" " >> .github/workflows/connections.toml
+          echo "warehouse = \"${{secrets.SF_WAREHOUSE}}\" " >> .github/workflows/connections.toml
           echo "$SF_PRIVATE_KEY" | base64 -d > .github/workflows/private_key.p8
           
           echo "changing user permission"

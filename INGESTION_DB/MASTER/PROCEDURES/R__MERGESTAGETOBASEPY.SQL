@@ -31,7 +31,7 @@ def merge_into_final(session,source,df,primary_keys,file,partnersk=-1):
         df_new = df_new.withColumn("PARTNERSK",lit(partnersk))
         primary_keys.append(''PARTNERSK'')
 
-    df_new.write.mode("overwrite").save_as_table(f''{database_name}.{schema_name}.{source}_Temp'',column_order="name",table_type=''temporary'')
+    df_new.write.mode("overwrite").save_as_table(f''{database_name}.{schema_name}.{source}_Tem'',column_order="name",table_type=''temporary'')
     
     date_cols = [''BASECREATEDDATE'',''BASEUPDATEDDATE'',''BASEDELETEDFLAG'',''SNOWFLAKE_CREATED_AT'',''SNOWFLAKE_UPDATED_AT'',''SNOWFLAKE_DELETED_FLAG'']
     
