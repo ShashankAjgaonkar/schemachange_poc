@@ -1,5 +1,5 @@
 [myconnection]
 account = "EKJHKPW-IR25446"
 user = "CICD_USER"
-authenticator: "SNOWFLAKE_JWT"
+authenticator = "SNOWFLAKE_JWT"
 warehouse = "DEVELOPER_WH"
